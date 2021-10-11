@@ -2,6 +2,7 @@
 #include <fcntl.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <string.h>
 #define MAX_STRING_LENGTH 256
 
 // consumatore.c e' un filtro
@@ -29,21 +30,30 @@ int main(int argc, char* argv[]){
     }
     else fd=0;
     printf("prefix = %s\n",prefix);
+    
+            int len_prefix=strlen(prefix);
 
 	while(nread = read(fd, &read_char, sizeof(char))) /* Fino ad EOF*/{
 		if(nread>=0){
-            int len_prefix=strlen(prefix);
                 if(read_char==prefix[k] && k<len_prefix){
                     
-                    
-                    if(k+1==len_prefix || read_char=='\n') k=0;
+                   /* if(read_char =='\n' || read_char==' ') {
+                        memset(buf,0,strlen(buf));
+
+                        k=0;
+                    }*/
+                    if(k+1>=len_prefix || read_char=='\n' || read_char==' ') k=0;
                     else {
                         buf[k]=read_char;
                         k++;
                     }
+                    /*else{
+                        write(1, read_char, sizeof(char));
+                        printf("%c",read_char);
+                    }*/
                 }
                 else if(read_char!=prefix[k] && k!=0){
-                    buf[k+1]='\0';
+                    buf[k]='\0';
                     k=0;
                     write(1, buf, sizeof(char)*strlen(buf));
                     //printf("%s",buf);
