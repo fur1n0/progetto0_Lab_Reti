@@ -42,29 +42,22 @@ int main(int argc, char* argv[]){
 
                         k=0;
                     }*/
-                    if(k+1>=len_prefix || read_char=='\n' || read_char==' ') k=0;
+                    if(k+1>=len_prefix || read_char=='\n') k=0;
                     else {
                         buf[k]=read_char;
                         k++;
                     }
-                    /*else{
-                        write(1, read_char, sizeof(char));
-                        printf("%c",read_char);
-                    }*/
                 }
                 else if(read_char!=prefix[k] && k!=0){
                     buf[k]='\0';
                     k=0;
                     write(1, buf, sizeof(char)*strlen(buf));
-                    //printf("%s",buf);
                     
                     write(1, &read_char, sizeof(char));
-                    //printf("%c",read_char);
                 }
                 else if(read_char!=prefix[k] && k==0){
                     k=0;
                     write(1, &read_char, sizeof(char));
-                    //printf("%c",read_char);
                 }
         }
 		else{
