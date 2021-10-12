@@ -40,16 +40,18 @@ int main(int argc, char* argv[]){
     printf("prefix = %s\n",prefix);
     
     int len_prefix=strlen(prefix);
-    int ok=1;
+    int ok=1; //se ok=1 non ho trovato un carattere della stringa filtro 
 	while(nread = read(fd, &read_char, sizeof(char))) /* Fino ad EOF*/{
         ok=1;
 		if(nread>=0){
             k=0;
+	    //ciclo di controllo sul carattere letto
             while(k<len_prefix && ok){
-                if(read_char==prefix[k] || prefix[k]==maiusc_minusc(read_char)) ok=0;
+                if(read_char==prefix[k] || prefix[k]==maiusc_minusc(read_char)) // ho trovato un carattere da eliminare
+			ok=0; // esco dal ciclo e non scrivo il carattere
                 k++;
             }
-            if(ok!=0) write(1,&read_char,sizeof(char));
+            if(ok!=0) write(1,&read_char,sizeof(char)); //il carattere non è contenuto nella stringa filtro
         }
 		else{
 			printf("(PID %d) impossibile leggere dal file %s", getpid(), file_in);
